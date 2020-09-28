@@ -1,0 +1,49 @@
+hk_pub.cppSubstitute :: [**  Copyright (c) 2020 Japan Aerospace Exploration Agency.
+] to [**  Copyright_hk_pub_1_ (c) 2020 Japan Aerospace Exploration Agency.
+]
+hk_pub.cppSubstitute :: [int main(int argc, char **argv) {
+] to [void main_hk_pub_1_(){
+]
+hk_pub.cppSubstitute :: [  ros::init(argc, argv, "hk_pub");
+] to [  CONVERT_RosInit(EVT_COUNT, EventFiltershk_pub_1);
+]
+hk_pub.cppSubstitute :: [  ros::NodeHandle nh;
+] to [
+]
+hk_pub.cppSubstitute :: [  ros::Publisher ros_pub;
+] to [
+]
+hk_pub.cppSubstitute :: [  ros_pub = nh.advertise<relay_node::CFE_SB_CmdHdr>("/cfs_hk/ground_command", 100);
+] to [  topicNo_hk_pub_1_0 = CONVERT_RosNodeHandleAdvertise("0x0000000000000", "/cfs_hk/ground_command", 100);
+]
+hk_pub.cppSubstitute :: [  ros::Rate loop_rate(100);
+] to [  uint32   loop_rate
+ = CONVERT_RosRate(100);
+]
+hk_pub.cppSubstitute :: [  while (ros::ok()) {
+] to [  while (CONVERT_RosOk()) {
+]
+hk_pub.cppSubstitute :: [    printf("please enter key.\n");
+] to [    OS_printf("please enter key.\n");
+]
+hk_pub.cppSubstitute :: [    ros_pub.publish(msg);
+] to [    {
+        msg.vector2pointer();
+        msg.string2pointer();
+        CONVERT_RosPublisherPublish((CFE_SB_Msg_t*)(&msg), sizeof(msg), TEMP::TOPIC::NO:_:ros_pub);
+    }
+]
+hk_pub.cppSubstitute :: [    printf("[command_pub][%02d:%02d.%06d] publish /cfs_hk/ground_command\n",
+] to [    OS_printf("[command_pub][%02d:%02d.%06d] publish /cfs_hk/ground_command\n",
+]
+hk_pub.cppSubstitute :: [    loop_rate.sleep();
+] to [    CONVERT_RosRateSleep(loop_rate, topicNo_hk_pub_1_0);
+]
+hk_pub.cppSubstitute :: [  return 0;
+] to [
+]
+hk_pub.hSubstitute :: [**  Copyright (c) 2020 Japan Aerospace Exploration Agency.
+] to [**  Copyright_hk_pub_1_ (c) 2020 Japan Aerospace Exploration Agency.
+]
+hk_pub.hSubstitute :: [#include <ros/ros.h>
+] to []

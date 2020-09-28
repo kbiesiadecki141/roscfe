@@ -1,0 +1,39 @@
+hk_sub.cppSubstitute :: [**  Copyright (c) 2020 Japan Aerospace Exploration Agency.
+] to [**  Copyright_hk_sub_1_ (c) 2020 Japan Aerospace Exploration Agency.
+]
+hk_sub.cppSubstitute :: [void msgCallback(const relay_node::HK_HkPacket::ConstPtr &msg) {
+] to [void msgCallback_hk_sub_1_(const relay_node::HK_HkPacket::ConstPtr &msg) {
+]
+hk_sub.cppSubstitute :: [  printf("[show_result][%02d:%02d.%06d] subscribe /cfs_hk/hk_telemetry\n",
+] to [  OS_printf("[show_result][%02d:%02d.%06d] subscribe /cfs_hk/hk_telemetry\n",
+]
+hk_sub.cppSubstitute :: [  printf("[show_result][%02d:%02d.%06d] CmdCounter = %d \n", time_st->tm_min,
+] to [  OS_printf("[show_result][%02d:%02d.%06d] CmdCounter = %d \n", time_st->tm_min,
+]
+hk_sub.cppSubstitute :: [int main(int argc, char **argv) {
+] to [void main_hk_sub_1_(){
+]
+hk_sub.cppSubstitute :: [  ros::init(argc, argv, "hk_sub");
+] to [  CONVERT_RosInit(EVT_COUNT, EventFiltershk_sub_1);
+]
+hk_sub.cppSubstitute :: [  ros::NodeHandle nh;
+] to [
+]
+hk_sub.cppSubstitute :: [  ros::Subscriber ros_sub;
+] to [
+]
+hk_sub.cppSubstitute :: [  ros_sub = nh.subscribe<relay_node::HK_HkPacket>("/cfs_hk/hk_telemetry", 100, msgCallback);
+] to [  std::function<void(void*)> f =  msgCallback_hk_sub_1_;
+  topicNo_hk_sub_1_0 = CONVERT_RosNodeHandleSubscribe("0x0000000000001", "/cfs_hk/hk_telemetry",  100, f, sizeof(relay_node::HK_HkPacket));
+]
+hk_sub.cppSubstitute :: [  ros::spin();
+] to [  CONVERT_RosSpin();
+]
+hk_sub.cppSubstitute :: [  return 0;
+] to [
+]
+hk_sub.hSubstitute :: [**  Copyright (c) 2020 Japan Aerospace Exploration Agency.
+] to [**  Copyright_hk_sub_1_ (c) 2020 Japan Aerospace Exploration Agency.
+]
+hk_sub.hSubstitute :: [#include <ros/ros.h>
+] to []

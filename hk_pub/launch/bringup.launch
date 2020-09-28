@@ -1,3 +1,0 @@
-<launch>
-  <node name="hk_pub" pkg="hk_pub" type="hk_pub" output="screen"/>
-</launch>

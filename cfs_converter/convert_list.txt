@@ -1,4 +1,7 @@
 # comment
 # [ros_pkg path] [launch file name] [name of launch node]
-/home/jaxa/catkin_ws/src/sample_pub bringup.launch sample_pub
-/home/jaxa/catkin_ws/src/sample_sub bringup.launch sample_sub
+#/home/ubuntu/astrolab/catkin_ws/src/sample_sub bringup.launch sample_sub
+#/home/ubuntu/astrolab/catkin_ws/src/sample_pub bringup.launch sample_pub
+# /home/ubuntu/astrolab/catkin_ws/src/hk_pub bringup.launch hk_pub
+# /home/ubuntu/astrolab/catkin_ws/src/hk_sub bringup.launch hk_sub
+#/home/ubuntu/astrolab/catkin_ws/src/foo

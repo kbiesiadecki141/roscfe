@@ -1,3 +1,0 @@
-<launch>
-  <node name="hk_sub" pkg="hk_sub" type="hk_sub" output="screen"/>
-</launch>

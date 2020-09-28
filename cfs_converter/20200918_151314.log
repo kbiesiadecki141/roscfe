@@ -1,0 +1,44 @@
+sample_sub.cppSubstitute :: [**  Copyright (c) 2020 Japan Aerospace Exploration Agency.
+] to [**  Copyright_sample_sub_1_ (c) 2020 Japan Aerospace Exploration Agency.
+]
+sample_sub.cppSubstitute :: [void msgCallback(const std_msgs::Header::ConstPtr& msg) 
+] to [void msgCallback_sample_sub_1_(void* callback_msg_cfsconverter){
+    std_msgs::Header* msg = (std_msgs::Header*)callback_msg_cfsconverter;
+    msg->pointer2string();
+    msg->pointer2vector();
+]
+sample_sub.cppSubstitute :: [{ 
+] to [
+]
+sample_sub.cppSubstitute :: [  ROS_INFO("received data: %d", msg->seq); 
+] to [  CFE_EVS_SendEvent(0x00, CFE_EVS_INFORMATION, "received data: %d", msg->seq); 
+]
+sample_sub.cppSubstitute :: [}
+] to [    msg->deleteData();
+}]
+sample_sub.cppSubstitute :: [int main(int argc, char** argv)
+] to [void main_sample_sub_1_()]
+sample_sub.cppSubstitute :: [  ros::init(argc, argv, "sample_sub");
+] to [  CONVERT_RosInit(EVT_COUNT, EventFilterssample_sub_1);
+]
+sample_sub.cppSubstitute :: [  ros::NodeHandle nh;
+] to [
+]
+sample_sub.cppSubstitute :: [  ros::Subscriber ros_sub;
+] to [
+]
+sample_sub.cppSubstitute :: [  ros_sub = nh.subscribe<std_msgs::Header>("ros_cfe_msg", 100, msgCallback);
+] to [  std::function<void(void*)> f =  msgCallback_sample_sub_1_;
+  topicNo_sample_sub_1_0 = CONVERT_RosNodeHandleSubscribe("0x0000000000000", "ros_cfe_msg",  100, f, sizeof(std_msgs::Header));
+]
+sample_sub.cppSubstitute :: [  ros::spin();
+] to [  CONVERT_RosSpin();
+]
+sample_sub.cppSubstitute :: [  return 0;
+] to [
+]
+sample_sub.hSubstitute :: [**  Copyright (c) 2020 Japan Aerospace Exploration Agency.
+] to [**  Copyright_sample_sub_1_ (c) 2020 Japan Aerospace Exploration Agency.
+]
+sample_sub.hSubstitute :: [#include <ros/ros.h>
+] to []

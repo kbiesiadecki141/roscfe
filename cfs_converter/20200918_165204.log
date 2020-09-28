@@ -1,0 +1,123 @@
+listener.cppSubstitute :: [**  Copyright (c) 2020 Japan Aerospace Exploration Agency.
+] to [**  Copyright_foo_1_ (c) 2020 Japan Aerospace Exploration Agency.
+]
+listener.cppSubstitute :: [void msgCallback(const std_msgs::Header::ConstPtr& msg) 
+] to [void msgCallback_foo_1_(void* callback_msg_cfsconverter){
+    std_msgs::Header* msg = (std_msgs::Header*)callback_msg_cfsconverter;
+    msg->pointer2string();
+    msg->pointer2vector();
+]
+listener.cppSubstitute :: [{ 
+] to [
+]
+listener.cppSubstitute :: [  ROS_INFO("received data: %d", msg->seq); 
+] to [  CFE_EVS_SendEvent(0x00, CFE_EVS_INFORMATION, "received data: %d", msg->seq); 
+]
+listener.cppSubstitute :: [}
+] to [    msg->deleteData();
+}]
+listener.cppSubstitute :: [int main(int argc, char** argv)
+] to [void main_foo_1_()]
+listener.cppSubstitute :: [  ros::init(argc, argv, "listener");
+] to [  CONVERT_RosInit(EVT_COUNT, EventFiltersfoo_1);
+]
+listener.cppSubstitute :: [  ros::NodeHandle nh;
+] to [
+]
+listener.cppSubstitute :: [  ros::Subscriber ros_sub;
+] to [
+]
+listener.cppSubstitute :: [  ros_sub = nh.subscribe<std_msgs::Header>("ros_cfe_msg", 100, msgCallback);
+] to [  std::function<void(void*)> f =  msgCallback_foo_1_;
+  topicNo_foo_1_0 = CONVERT_RosNodeHandleSubscribe("0x0000000000000", "ros_cfe_msg",  100, f, sizeof(std_msgs::Header));
+]
+listener.cppSubstitute :: [  ros::spin();
+] to [  CONVERT_RosSpin();
+]
+listener.cppSubstitute :: [  return 0;
+] to [
+]
+talkerutf.cppSubstitute :: [**  Copyright (c) 2020 Japan Aerospace Exploration Agency.
+] to [**  Copyright_foo_1_ (c) 2020 Japan Aerospace Exploration Agency.
+]
+talkerutf.cppSubstitute :: [#include "ros/ros.h"
+] to []
+talkerutf.cppSubstitute :: [int main(int argc, char **argv)
+] to [void main_foo_1_()]
+talkerutf.cppSubstitute :: [  ros::init(argc, argv, "sample_pub");
+] to [  CONVERT_RosInit(EVT_COUNT, EventFiltersfoo_1);
+]
+talkerutf.cppSubstitute :: [  ros::NodeHandle nh;
+] to [
+]
+talkerutf.cppSubstitute :: [  ros::Publisher ros_pub;
+] to [
+]
+talkerutf.cppSubstitute :: [  ros_pub = nh.advertise<std_msgs::Header>("ros_cfe_msg", 100);
+] to [  topicNo_foo_1_0 = CONVERT_RosNodeHandleAdvertise("0x0000000000001", "ros_cfe_msg", 100);
+]
+talkerutf.cppSubstitute :: [  ros::Rate loop_rate(100);
+] to [  uint32   loop_rate
+ = CONVERT_RosRate(100);
+]
+talkerutf.cppSubstitute :: [  while (ros::ok()) {
+] to [  while (CONVERT_RosOk()) {
+]
+talkerutf.cppSubstitute :: [    ROS_INFO("send msg.data: %d, rostimenow.toSec: %f", msg.seq, ros::Time::now().toSec());
+] to [    CFE_EVS_SendEvent(0x01, CFE_EVS_INFORMATION, "send msg.data: %d, rostimenow.toSec: %f", msg.seq, CONVERT_RosTimeNowToSec());
+]
+talkerutf.cppSubstitute :: [    ros_pub.publish(msg);
+] to [    {
+        msg.vector2pointer();
+        msg.string2pointer();
+        CONVERT_RosPublisherPublish((CFE_SB_Msg_t*)(&msg), sizeof(msg), TEMP::TOPIC::NO:_:ros_pub);
+    }
+]
+talkerutf.cppSubstitute :: [    loop_rate.sleep();
+] to [    CONVERT_RosRateSleep(loop_rate, topicNo_foo_1_0);
+]
+talkerutf.cppSubstitute :: [  return 0;
+] to [
+]
+talker.cppSubstitute :: [**  Copyright (c) 2020 Japan Aerospace Exploration Agency.
+] to [**  Copyright_foo_1_ (c) 2020 Japan Aerospace Exploration Agency.
+]
+talker.cppSubstitute :: [#include "ros/ros.h"
+] to []
+talker.cppSubstitute :: [int main(int argc, char **argv)
+] to [void main_foo_1_()]
+talker.cppSubstitute :: [  ros::init(argc, argv, "talker");
+] to [  CONVERT_RosInit(EVT_COUNT, EventFiltersfoo_1);
+]
+talker.cppSubstitute :: [  ros::NodeHandle nh;
+] to [
+]
+talker.cppSubstitute :: [  ros::Publisher ros_pub;
+] to [
+]
+talker.cppSubstitute :: [  ros_pub = nh.advertise<std_msgs::Header>("ros_cfe_msg", 100);
+] to [  topicNo_foo_1_0 = CONVERT_RosNodeHandleAdvertise("0x0000000000002", "ros_cfe_msg", 100);
+]
+talker.cppSubstitute :: [  ros::Rate loop_rate(100);
+] to [  uint32   loop_rate
+ = CONVERT_RosRate(100);
+]
+talker.cppSubstitute :: [  while (ros::ok()) {
+] to [  while (CONVERT_RosOk()) {
+]
+talker.cppSubstitute :: [    ROS_INFO("send msg.data: %d, rostimenow.toSec: %f", msg.seq, ros::Time::now().toSec());
+] to [    CFE_EVS_SendEvent(0x02, CFE_EVS_INFORMATION, "send msg.data: %d, rostimenow.toSec: %f", msg.seq, CONVERT_RosTimeNowToSec());
+]
+talker.cppSubstitute :: [    ros_pub.publish(msg);
+] to [    {
+        msg.vector2pointer();
+        msg.string2pointer();
+        CONVERT_RosPublisherPublish((CFE_SB_Msg_t*)(&msg), sizeof(msg), TEMP::TOPIC::NO:_:ros_pub);
+    }
+]
+talker.cppSubstitute :: [    loop_rate.sleep();
+] to [    CONVERT_RosRateSleep(loop_rate, topicNo_foo_1_0);
+]
+talker.cppSubstitute :: [  return 0;
+] to [
+]

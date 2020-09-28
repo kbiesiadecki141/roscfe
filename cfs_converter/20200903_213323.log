@@ -1,0 +1,127 @@
+listener.cppSubstitute :: [#include "ros/ros.h"
+] to []
+listener.cppSubstitute :: [void chatterCallback(const std_msgs::Header::ConstPtr& msg)
+] to [void chatterCallback_foo_1_(void* callback_msg_cfsconverter){
+    std_msgs::Header* msg = (std_msgs::Header*)callback_msg_cfsconverter;
+    msg->pointer2string();
+    msg->pointer2vector();
+]
+listener.cppSubstitute :: [{
+] to [
+]
+listener.cppSubstitute :: [  ROS_INFO("I heard: [%d]", msg->seq);
+] to [  CFE_EVS_SendEvent(0x00, CFE_EVS_INFORMATION, "I heard: [%d]", msg->seq);
+]
+listener.cppSubstitute :: [}
+] to [    msg->deleteData();
+}]
+listener.cppSubstitute :: [int main(int argc, char **argv)
+] to [void main_foo_1_()]
+listener.cppSubstitute :: [   * The ros::init() function needs to see argc and argv so that it can perform
+] to [   CONVERT_RosInit(EVT_COUNT, EventFiltersfoo_1);
+]
+listener.cppSubstitute :: [   * You must call one of the versions of ros::init() before using any other
+] to [   CONVERT_RosInit(EVT_COUNT, EventFiltersfoo_1);
+]
+listener.cppSubstitute :: [  ros::init(argc, argv, "listener");
+] to [  CONVERT_RosInit(EVT_COUNT, EventFiltersfoo_1);
+]
+listener.cppSubstitute :: [   * NodeHandle is the main access point to communications with the ROS system.
+] to [*NodeHandleisthemainaccesspointtocommunicationswiththeROSsystem.
+
+]
+listener.cppSubstitute :: [   * The first NodeHandle constructed will fully initialize this node, and the last
+] to [*ThefirstNodeHandleconstructedwillfullyinitializethisnode,andthelast
+
+]
+listener.cppSubstitute :: [   * NodeHandle destructed will close down the node.
+] to [*NodeHandledestructedwillclosedownthenode.
+
+]
+listener.cppSubstitute :: [  ros::NodeHandle n;
+] to [
+]
+listener.cppSubstitute :: [   * called chatterCallback.  subscribe() returns a Subscriber object that you
+] to [
+]
+listener.cppSubstitute :: [  ros::Subscriber sub = n.subscribe<std_msgs::Header&>("chatter", 1000, chatterCallback);
+] to [std::function<void(void*)>f=chatterCallback_foo_1_;
+topicNo_foo_1_0=CONVERT_RosNodeHandleSubscribe("0x0000000000000","chatter",1000,f,sizeof(std_msgs::Header&));
+
+]
+listener.cppSubstitute :: [   * ros::spin() will enter a loop, pumping callbacks.  With this version, all
+] to [   * CONVERT_RosSpin() will enter a loop, pumping callbacks.  With this version, all
+]
+listener.cppSubstitute :: [   * callbacks will be called from within this thread (the main one).  ros::spin()
+] to [   * callbacks will be called from within this thread (the main one).  CONVERT_RosSpin()
+]
+listener.cppSubstitute :: [  ros::spin();
+] to [  CONVERT_RosSpin();
+]
+listener.cppSubstitute :: [  return 0;
+] to [
+]
+talker.cppSubstitute :: [#include "ros/ros.h"
+] to []
+talker.cppSubstitute :: [int main(int argc, char **argv)
+] to [void main_foo_1_()]
+talker.cppSubstitute :: [   * The ros::init() function needs to see argc and argv so that it can perform
+] to [   CONVERT_RosInit(EVT_COUNT, EventFiltersfoo_1);
+]
+talker.cppSubstitute :: [   * You must call one of the versions of ros::init() before using any other
+] to [   CONVERT_RosInit(EVT_COUNT, EventFiltersfoo_1);
+]
+talker.cppSubstitute :: [  ros::init(argc, argv, "talker");
+] to [  CONVERT_RosInit(EVT_COUNT, EventFiltersfoo_1);
+]
+talker.cppSubstitute :: [   * NodeHandle is the main access point to communications with the ROS system.
+] to [*NodeHandleisthemainaccesspointtocommunicationswiththeROSsystem.
+
+]
+talker.cppSubstitute :: [   * The first NodeHandle constructed will fully initialize this node, and the last
+] to [*ThefirstNodeHandleconstructedwillfullyinitializethisnode,andthelast
+
+]
+talker.cppSubstitute :: [   * NodeHandle destructed will close down the node.
+] to [*NodeHandledestructedwillclosedownthenode.
+
+]
+talker.cppSubstitute :: [  ros::NodeHandle n;
+] to [
+]
+talker.cppSubstitute :: [   * node.  advertise() returns a Publisher object which allows you to
+] to [
+]
+talker.cppSubstitute :: [   * all copies of the returned Publisher object are destroyed, the topic
+] to [
+]
+talker.cppSubstitute :: [  ros::Publisher chatter_pub = n.advertise<std_msgs::Header>("chatter", 1000);
+] to [topicNo_foo_1_0=CONVERT_RosNodeHandleAdvertise("0x0000000000001","chatter",1000);
+
+]
+talker.cppSubstitute :: [  ros::Rate loop_rate(10);
+] to [  uint32   loop_rate
+ = CONVERT_RosRate(10);
+]
+talker.cppSubstitute :: [  while (ros::ok())
+] to [  while (CONVERT_RosOk())
+]
+talker.cppSubstitute :: [    ROS_INFO("msg.data: %d, time: %f", msg.seq, ros::Time::now().toSec());
+] to [    CFE_EVS_SendEvent(0x01, CFE_EVS_INFORMATION, "msg.data: %d, time: %f", msg.seq, CONVERT_RosTimeNowToSec());
+]
+talker.cppSubstitute :: [    chatter_pub.publish(msg);
+] to [    {
+        msg.vector2pointer();
+        msg.string2pointer();
+        CONVERT_RosPublisherPublish((CFE_SB_Msg_t*)(&msg), sizeof(msg), TEMP::TOPIC::NO:_:chatter_pub);
+    }
+]
+talker.cppSubstitute :: [    ros::spinOnce();
+] to [    CONVERT_RosSpinOnce();
+]
+talker.cppSubstitute :: [    loop_rate.sleep();
+] to [    CONVERT_RosRateSleep(loop_rate, topicNo_foo_1_0);
+]
+talker.cppSubstitute :: [  return 0;
+] to [
+]
